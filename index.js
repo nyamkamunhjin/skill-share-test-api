@@ -3,14 +3,22 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
-
+const passport = require('passport');
 const authRouter = require('./routes/api-auth');
-require('dotenv').config();
+const postRouter = require('./routes/api-post');
+const userRouter = require('./routes/api-user');
 
+require('dotenv').config();
+require('./passport/passport-setup');
+
+app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
 
 app.use('/api/auth', authRouter);
+app.use('/api/post', postRouter);
+app.use('/api/user', userRouter);
+
 app.get('/', async (req, res) => res.send('hello from api'));
 // connect to mongo db
 mongoose

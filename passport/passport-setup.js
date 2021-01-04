@@ -9,7 +9,7 @@ passport.use(
   new LocalStrategy(
     { usernameField: 'email', passwordField: 'password', session: false },
     (email, password, done) => {
-      User.findOne({ 'userInfo.email': email }, (err, user) => {
+      User.findOne({ email: email }, (err, user) => {
         if (err) {
           return done(err);
         }
@@ -20,7 +20,7 @@ passport.use(
 
         console.log(user);
 
-        bcrypt.compare(password, user.userInfo.password).then((res) => {
+        bcrypt.compare(password, user.password).then((res) => {
           if (res) return done(null, user);
 
           return done(null, false, { message: 'Incorrect password.' });
@@ -38,7 +38,7 @@ passport.use(
     },
     async (token, done) => {
       try {
-        User.findOne({ 'userInfo.email': token.user.email }, (err, user) => {
+        User.findOne({ email: token.user.email }, (err, user) => {
           if (err) {
             console.log(err);
             return done(null, false, { message: err.message });

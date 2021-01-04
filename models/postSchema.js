@@ -6,7 +6,7 @@ const postSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  body: {
+  content: {
     type: Schema.Types.String,
     requried: true,
   },
@@ -15,7 +15,7 @@ const postSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  likes: Schema.Types.Number,
+  likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   comments: [
     {
       comment: Schema.Types.String,
@@ -27,6 +27,6 @@ const postSchema = new Schema({
   ],
 });
 
-userSchema.plugin(uniqueValidator);
+postSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Post', postSchema);
