@@ -16,11 +16,15 @@ router.post(
       return post.validate((err) => {
         if (err) {
           console.log(err);
+          res.status(409).json({
+            success: false,
+            message: err.message,
+          });
           // throw err;
         } else {
           post.save((err) => {
-            if (err) throw new Error('post validation failed.');
-            else {
+            if (err) {
+            } else {
               res
                 .status(200)
                 .json({ success: true, message: 'post added to database.' });

@@ -7,18 +7,19 @@ const passport = require('passport');
 const authRouter = require('./routes/api-auth');
 const postRouter = require('./routes/api-post');
 const userRouter = require('./routes/api-user');
+const cors = require('cors');
 
 require('dotenv').config();
 require('./passport/passport-setup');
 
+app.use(cors({ origin: true }));
 app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
 
-app.use('/api/auth', authRouter);
+app.use('/auth', authRouter);
 app.use('/api/post', postRouter);
 app.use('/api/user', userRouter);
-
 app.get('/', async (req, res) => res.send('hello from api'));
 // connect to mongo db
 mongoose
