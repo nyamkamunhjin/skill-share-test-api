@@ -4,7 +4,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 const userSchema = new Schema({
   username: {
     type: Schema.Types.String,
-    required: true,
+    // required: true,
     unique: true,
   },
   password: {
@@ -34,12 +34,13 @@ const userSchema = new Schema({
   },
   dateOfBirth: {
     type: Schema.Types.Date,
-    required: true,
+    // required: true,
   },
   userType: {
     type: Schema.Types.String,
     enum: ['Admin', 'Normal'],
-    required: true,
+    default: 'Normal',
+    // required: true,
   },
   posts: [
     {
@@ -50,6 +51,7 @@ const userSchema = new Schema({
   reputationPoint: {
     type: Schema.Types.Number,
     default: 0,
+    min: 0,
   },
 });
 
